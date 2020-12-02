@@ -21,13 +21,13 @@ data <- fromJSON(url, flatten = TRUE)
 library(RCurl)
 library(jsonlite)
 
-qdate <- '20180927'
+qdate <- '20201201'
 qtype <- 'ALLBUT0999'
 ttime <- as.character(as.integer(as.POSIXct(Sys.time()))*100)
-url <- paste0('http://www.twse.com.tw/exchangeReport/BFT41U?response=json&date=', qdate, '&selectType=','&_=', ttime)
+url <- paste0('https://www.twse.com.tw/exchangeReport/BFT41U?response=json&date=', qdate, '&selectType=', qtype,'&_=', ttime)
 A <- fromJSON(url, flatten=T)
-data_20180927 <- as.data.frame(A$data)
-colnames(data_20180927) <- A$fields
+data_20201201 <- as.data.frame(A$data)
+colnames(data_20201201) <- A$fields
 
 
 #### NBA ####
