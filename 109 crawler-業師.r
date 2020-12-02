@@ -1,4 +1,5 @@
-
+install.packages("httr")
+install.packages("XML")
 #### XML API ####
 library(httr)
 library(XML)
