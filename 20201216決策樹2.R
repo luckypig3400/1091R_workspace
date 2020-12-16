@@ -40,3 +40,40 @@ rtree2 <- rpart(Kyphosis~Age+Number+Start,control = rpart.control(cp = 0.05))
 plot(rtree2,main = '剪枝')
 text(rtree2,use.n = TRUE)
 summary(rtree2)
+
+
+#模式評估與部署
+install.packages("C50")
+library(C50)
+n=0.3*nrow(iris) #70%訓練資料、30％驗證資料，設定應有的測試資料數量
+test.index=sample(1:nrow(iris),n)#隨機抽取n筆驗證資料30％
+iris.train=iris[-test.index,] #剔除所選取驗證資料而成為訓練資料
+iris.test=iris[test.index,]
+
+#-----------2.以訓練資料產生決策樹模式
+irismodel=C5.0(Species~ . ,data=iris)
+summary(irismodel)
+plot(irismodel)
+
+#-----------3.train confusion matrix-製作訓練資料的混淆矩陣
+species.train=iris$Species[-test.index] #存訓練資料各筆資料之品種名稱
+train.pred=predict(irismodel,iris.train,type='class') #存「模式中所判定」的品種名稱
+table.train=table(species.train,train.pred) #製作訓練與預測資料中的品種列聯表
+table.train
+cat("Total records(train)=",nrow(iris.train),"\n")#cat:為輸出函數
+cat("Correct Classification Ratio(train)=",
+    sum(diag(table.train))/sum(table.train)*100,"%\n")
+
+#----------4.test confusion matrix-以驗證資料製作製作混淆矩陣
+species.test=iris$Species[test.index]
+test.pred=predict(irismodel,iris.test,type='class')
+table.test=table(species.test,test.pred)
+table.test
+cat("Total records(test)=",nrow(iris.test),"\n")
+cat("Correct Classification Ratio(test)=", sum(diag(table.test))/sum(table.test)*100,"%\n")
+
+#----------5.irisnew2.txt模式部署-用新資料進行預測
+irisnew2=read.table("iris_new2.txt",header=T,sep=",")
+iris.pred=predict(irismodel,irisnew2,type='class')#以PREDICT函數進行預測-給予模式以及資料
+irisall=data.frame(irisnew2,Spec.Pred=iris.pred)#合併新資料與預測值 merge predict result and output
+irisall
