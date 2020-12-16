@@ -26,6 +26,7 @@ summary(CHAID.model)
 #三、剪枝
 #A.rpart 不剪枝
 #思考Kyphosis資料集適合用哪種方法？
+library(rpart) #使用kyphosis前要先引入rpart函式庫
 head(kyphosis) #內建於rpart，Kyphosis（有、無）、 Age（月）、Number（次數） 、Start（何時開始）
 attach(kyphosis)#持續使用該資料集
 par(mfrow = c(1,2),xpd = NA)
