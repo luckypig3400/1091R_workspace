@@ -77,3 +77,24 @@ irisnew2=read.table("iris_new2.txt",header=T,sep=",")
 iris.pred=predict(irismodel,irisnew2,type='class')#以PREDICT函數進行預測-給予模式以及資料
 irisall=data.frame(irisnew2,Spec.Pred=iris.pred)#合併新資料與預測值 merge predict result and output
 irisall
+
+
+
+#===決策樹function 通用語法===
+result=函數名稱(Y~X1+X2+…+Xk, 其他選項)
+# Y若為類別變數, 需設為factor型態
+pred<-predict(result, new_X_data, type="class")
+# 混淆矩陣(confusion matrix)
+ctable<-table(Y真實值, pred)
+# 預測正確率
+sum(diag(ctable))/sum(ctable)
+#===決策樹function 通用語法===
+
+
+
+#===R機器學習基本語法===
+n=0.3*nrow(iris) #70%訓練資料、30％驗證資料，設定應有的測試資料數量
+test.index=sample(1:nrow(iris),n)#隨機抽取n筆驗證資料30％
+iris.train=iris[-test.index,] #剔除所選取驗證資料而成為訓練資料
+iris.test=iris[test.index,]
+#===R機器學習基本語法===
