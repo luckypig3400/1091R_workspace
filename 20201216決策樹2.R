@@ -98,3 +98,17 @@ test.index=sample(1:nrow(iris),n)#隨機抽取n筆驗證資料30％
 iris.train=iris[-test.index,] #剔除所選取驗證資料而成為訓練資料
 iris.test=iris[test.index,]
 #===R機器學習基本語法===
+
+
+
+#佈署：將建立好模式，運用於新資料
+#C5.0 irisnew2.txt模式部署-用新資料進行預測1.讀入新資料檔
+library(C50)
+irisnew2=read.table("iris_new2.txt",header=T,sep=",")
+#2.用 C5.0建立決策樹模式
+#iris.tree=C5.0(Species~ . ,data=iris) #建立模型，如之前已建立，則無須再執行
+#3. 以predict函數預測 irisnew2的品種
+iris.pred=predict(iris.tree,irisnew2,type='class')#以PREDICT函數進行預測-給予模式以及資料
+#4. 整合要預測的資料及預測的結果
+irisall=data.frame(irisnew2,Spec.Pred=iris.pred)
+irisall
