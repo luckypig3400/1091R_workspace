@@ -1,5 +1,5 @@
 #決策樹二—類別資料CHAID
-install.packages("CHAID", repos="http://R-Forge.Rproject.org")
+install.packages("CHAID", repos="http://R-Forge.R-project.org")
 library(CHAID)
 install.packages("ggplot2")
 library(ggplot2)
