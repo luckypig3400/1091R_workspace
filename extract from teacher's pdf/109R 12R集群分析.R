@@ -2,9 +2,9 @@
 # 拿到資料的可能分析判斷
 # 1. 有標記—決策樹—萃取決策規則
 # 2. 無標記—主成分分析+集群分析—分出各群，並尋找各群特色
-w<-read.csv("wholesales.csv")
+w <- read.csv("wholesales.csv")
 # 老闆會不會問你：哪個通路、哪個地區的哪種產品賣的好？
-# 要如何分析？ 
+# 要如何分析？
 
 
 
@@ -84,9 +84,9 @@ w<-read.csv("wholesales.csv")
 # – 階層式分群
 # – 分割式分群
 # ‧ 資料來源：https://officeguide.cc/r-hcpc-hierarchical-clustering-on-principalcomponents-factominer-tutorial/
-  
-  
-  
+
+
+
 # ‧ 屬於連續型變數時，主成分分析（PCA）可以降
 # 低資料的維度、保留重要的特徵，接著再以群集
 # 分析對主成分分析的結果進行分群
@@ -144,18 +144,25 @@ res.pca <- PCA(USArrests, ncp = 3, graph = FALSE)
 plot(res.pca, choix = "ind")
 plot(res.pca, choix = "var")
 # 來源：https://officeguide.cc/r-hcpc-hierarchical-clustering-onprincipal-components-factominer-tutorial/
-  
-  
-  
+
+
+
 # 2.HCPC 分析
 res.hcpc <- HCPC(res.pca, graph = FALSE)
 # 樹狀圖 factoextra 的 fviz_dend 繪製由階層式分群所產生的樹狀圖
-fviz_dend(res.hcpc,
-          cex = 0.7, # 文字大小
-          palette = "jco", # 文字配色
-          rect = TRUE, rect_fill = TRUE, # 加入分群標示方框
-          rect_border = "jco", # 方框配色
-          labels_track_height = 0.8) # 文字顯示空間
+fviz_dend(
+  res.hcpc,
+  cex = 0.7,
+  # 文字大小
+  palette = "jco",
+  # 文字配色
+  rect = TRUE,
+  rect_fill = TRUE,
+  # 加入分群標示方框
+  rect_border = "jco",
+  # 方框配色
+  labels_track_height = 0.8
+) # 文字顯示空間
 
 
 
@@ -185,7 +192,7 @@ res.hcpc$desc.axes$quanti
 wholes <- read.csv("wholesales.csv")
 str(wholes)
 #1.資料矩陣操作
-wh <- wholes[,c(2,6:8)]
+wh <- wholes[, c(2, 6:8)]
 str(wh)
 # 請以wh檔案為基礎，完成集群分析，並說明各群可能特徵
 
@@ -198,11 +205,16 @@ data(tea)
 str(tea)
 head(tea)
 # 1.# 先以MCA 分析，保留前20個維度
-res.mca <- MCA(tea,
-               ncp = 20, # 保留前 20 維度
-               quanti.sup = 19, # 連續型補充變數
-               quali.sup = c(20:36), # 類別型補充變數
-               graph = FALSE)
+res.mca <- MCA(
+  tea,
+  ncp = 20,
+  # 保留前 20 維度
+  quanti.sup = 19,
+  # 連續型補充變數
+  quali.sup = c(20:36),
+  # 類別型補充變數
+  graph = FALSE
+)
 
 
 
@@ -228,6 +240,6 @@ res.hcpc$desc.var$test.chi2
 load("sales.RData") #讀入sales檔案
 head(sales)
 str(sales)
-sa <- sales[,c(3:5,6:7,9:10)] #選取相關欄位變數
+sa <- sales[, c(3:5, 6:7, 9:10)] #選取相關欄位變數
 head(sa) #共7個，4-5補充屬量，7補充屬質。
 # 請用類別變數方式進行集群分析，看可以分出幾群，以及特徵為何
